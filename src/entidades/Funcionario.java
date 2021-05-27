@@ -1,17 +1,17 @@
 package entidades;
 
-
+import java.util.ArrayList;
+import java.util.List;
 
 import model.services.Busca;
 
-public class Funcionario implements Busca{
+public class Funcionario implements Busca {
 
 	private String nome;
 	private Integer matricula;
 	private Double salario;
-	
-	
-	
+
+	List<Funcionario> list = new ArrayList<>();
 
 	public Funcionario() {
 	}
@@ -21,10 +21,11 @@ public class Funcionario implements Busca{
 		this.matricula = matricula;
 		this.salario = salario;
 	}
-	
-	
-	
-	
+
+	public List<Funcionario> getList() {
+		return list;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -45,22 +46,28 @@ public class Funcionario implements Busca{
 		return salario;
 	}
 
-	public void setSalario(Double salario) {
-		this.salario = salario;
+	public void aumentoSalarial(double aumento) {
+
+		
+		salario = salario + (salario * aumento / 100);
 	}
 
-	public void aumentoSalarial(double aumento) {
+	public void dadosFuncionario(Integer num) {
+
+		if (list.get(num) == null) 
+			System.out.println("matricula nao existe!");
+		 else 
+			System.out.println(list.get(num).toString());
 		
-	salario = salario +(salario*aumento/100);
+
 	}
-	
-	
+
+	public void cadastroFuncionario(String nome, Integer matricula, Double salario) {
+		list.add(new Funcionario(nome, matricula, salario));
+	}
 
 	public String toString() {
-		return "\nNome: " + nome 
-				+ "\nMatricula: " + matricula
-				+ "\nSalario: " + salario + "\n";
+		return "\nNome: " + nome + "\nMatricula: " + matricula + "\nSalario: " + salario + "\n";
 	}
 
-	
 }

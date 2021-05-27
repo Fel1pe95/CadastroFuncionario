@@ -1,83 +1,68 @@
 package aplicação;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import entidades.Funcionario;
+import entidades.Menus;
 
 public class CadastroFuncionario {
 
 	public static void main(String[] args) {
 
-		Scanner entrada = new Scanner(System.in);
-		List<Funcionario> list = new ArrayList<>();
-		Funcionario funcionario = null;
+		Scanner sc = new Scanner(System.in);
+		Funcionario f = new Funcionario();
+		Menus menu = new Menus();
 		int resp;
 		do {
-			System.out.print("--------------------------------------------------------\n");
-			System.out.println(
-					"[1] - cadastro\n[2] - atualização de salario\n[3] - remoção de funcionario\n[4] - dados funcionarios\n[5] - Sair");
-			System.out.println("--------------------------------------------------------");
-			resp = entrada.nextInt();
+			menu.menus();
+			resp = sc.nextInt();
 
-			if (resp == 1) {
+			switch (resp) {
+			case 1:
 
 				System.out.print("Nome: ");
-				entrada.nextLine();
-				String nome = entrada.nextLine();
+				sc.nextLine();
+				String nome = sc.nextLine();
 				System.out.print("Matricula: ");
-				Integer matricula = entrada.nextInt();
+				Integer matricula = sc.nextInt();
 				System.out.print("Salario: ");
-				Double salario = entrada.nextDouble();
-				funcionario = new Funcionario(nome, matricula, salario);
-				list.add(funcionario);
-
-			} else if (resp == 4) {
-
+				Double salario = sc.nextDouble();
+				f.cadastroFuncionario(nome, matricula, salario);
+				break;
+			case 4:
 				System.out.print("matricula do funcionario: ");
-				Integer matricula = entrada.nextInt();
-
-				Integer pos = funcionario.posicao(list, matricula);
-
-				if (pos == null) {
-					System.out.println("matricula nao existe!");
-				} else {
-
-					System.out.println(list.get(pos));
-				}
-
-			} else if (resp == 2) {
+				matricula = sc.nextInt();
+				Integer pos = f.posicao(f.getList(), matricula);
+				f.dadosFuncionario(pos);
+				break;
+			case 2:
 				System.out.print("matricula do funcionario: ");
-				Integer matricula = entrada.nextInt();
-
-				Integer pos = funcionario.posicao(list, matricula);
+				matricula = sc.nextInt();
+				pos = f.posicao(f.getList(), matricula);
 				if (pos == null) {
 					System.out.println("matricula nao existe!");
 				} else {
 					System.out.print("Porcentagem de aumento: ");
-					Double aumento = entrada.nextDouble();
-					list.get(pos).aumentoSalarial(aumento);
-
+					Double aumento = sc.nextDouble();
+					f.getList().get(pos).aumentoSalarial(aumento);
 				}
-
-			} else if (resp == 3) {
+				break;
+			case 3:
 				System.out.print("matricula do funcionario: ");
-				Integer matricula = entrada.nextInt();
-				Integer pos = funcionario.posicao(list, matricula);
-
+				matricula = sc.nextInt();
+				pos = f.posicao(f.getList(), matricula);
 				if (pos == null) {
 					System.out.println("matricula nao existe!");
 				} else {
 
-					list.remove(pos);
+					f.getList().remove(pos);
 				}
-			}
+				break;
 
+			}
 		} while (resp != 5);
 
-
-		entrada.close();
+		sc.close();
 
 	}
 
